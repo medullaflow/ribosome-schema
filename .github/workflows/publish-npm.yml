@@ -5,13 +5,26 @@
 # Gated on a published GitHub Release (not on every tag push) so a publish is
 # always a deliberate, human-triggered action.
 #
-# One-time manual step this workflow cannot do: add an npm token as the
-# NPM_TOKEN repo secret (Settings → Secrets and variables → Actions → New
-# repository secret). Use a Granular Access Token (npmjs.com → Access Tokens
-# → Generate New Token → Granular Access Token) scoped to just this package,
-# "Read and write" permission, with an expiry — least-privilege, and it works
-# for CI without an interactive OTP prompt. A classic "Automation" token also
-# works if you prefer npm's older token type.
+# Uses npm Trusted Publishing (OIDC) — no NPM_TOKEN secret, ever. The runner
+# exchanges a short-lived GitHub OIDC token for npm publish rights; nothing
+# long-lived is stored in this repo. Requires `id-token: write` below and, on
+# npmjs.com, a Trusted Publisher configured for this exact repo + workflow
+# filename (see docs.npmjs.com/trusted-publishers).
+#
+# KNOWN LIMITATION (npm/cli#8544): OIDC cannot publish the very FIRST version
+# of a package that has never existed on the registry — npmjs.com requires the
+# package to already exist before you can configure a Trusted Publisher for it.
+# So bootstrapping is a one-time manual step OUTSIDE this workflow:
+#   cd bindings/typescript && npm login && npm publish --access public
+# Do this once for v0.1.0, from a local machine. Every release after that goes
+# through this workflow with zero tokens.
+#
+# One-time manual step this workflow cannot do: on npmjs.com, package Settings
+# → Trusted Publisher → GitHub Actions →
+#   Organization or user: medullaflow
+#   Repository: ribosome-schema
+#   Workflow filename: publish-npm.yml   (filename only, not the path — case-sensitive)
+#   Allowed actions: npm publish
 
 name: publish-npm
 
@@ -21,6 +34,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write # required for OIDC trusted publishing
 
 jobs:
   publish:
@@ -31,9 +45,12 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
+      # Trusted publishing requires npm CLI >= 11.5.1; pin explicitly rather
+      # than trust whatever ships with the node-version image.
+      - run: npm install -g npm@latest
       - run: npm install
       - run: npm run build
+      # No NODE_AUTH_TOKEN here — setting one would make npm fall back to
+      # legacy token auth instead of OIDC trusted publishing.
       - run: npm publish --access public
         working-directory: bindings/typescript
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
