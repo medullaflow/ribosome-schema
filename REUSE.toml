@@ -16,6 +16,7 @@ path = [
   ".gitignore",
   "AUTHORS",
   "CONTRIBUTING.md",
+  "ROADMAP.md",
   ".github/CODEOWNERS",
 ]
 precedence = "aggregate"

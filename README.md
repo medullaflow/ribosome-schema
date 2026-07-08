@@ -11,11 +11,11 @@ a TypeScript binding.
 [![Status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](#status)
 
 This repo holds **the standard, and only the standard** — no resolver, no
-runtime, no orchestration logic. That lives in
-[ribosome](https://github.com/medullaflow/ribosome), which depends on this
-repo instead of embedding the schema. Splitting them keeps the standard
-**freely implementable by anyone** (Apache-2.0, no copyleft) independent of the
-reference implementation's license (AGPL-3.0-or-later).
+runtime, no orchestration logic. It is **Apache-2.0, so anyone can implement it**
+in any product, open or closed, with no obligation. Resolvers/tools consume it
+as a dependency rather than embedding it; the
+[ribosome](https://github.com/medullaflow/ribosome) resolver is the reference
+consumer, but the standard stands on its own.
 
 ## What's here
 
@@ -86,8 +86,9 @@ optional field, loosening a constraint, fixing a description/typo.
 
 1. Create `schema/v2/manifest.schema.json` and `schema/v2/lockfile.schema.json`
    — copy from `v1`, bump `schemaVersion.const` and `$id` in both.
-   **`schema/v1/` is never edited or deleted** — its `$id` URLs must keep
-   resolving exactly as published, forever (see [D10](https://github.com/medullaflow/ribosome#design-decisions)).
+   **`schema/v1/` is never edited or deleted** — once an `$id` URL is published
+   it must keep resolving, byte-for-byte, forever; consumers pin to it. A new
+   version is additive (`v2/` alongside `v1/`), never a mutation of the old one.
 2. Update `CURRENT_SCHEMA_DIR` in `scripts/gen-types.js` (and in
    `test/schema-version.test.js`) to `"v2"`.
 3. Run `npm run spec:types`, add conformance fixtures under
@@ -109,10 +110,9 @@ npm run vendor:check   # verify the vendored server.json against its pin (local 
 ## Status
 
 Pre-alpha. The schemas, conformance corpus, and TypeScript binding are real and
-tested, and the schema is **hosted live** at its canonical `$id`
-(`schema.ribosome.medullaflow.org`). Not yet published to npm — see
-[the ribosome roadmap](https://github.com/medullaflow/ribosome/blob/main/ROADMAP.md)
-Phase 4.
+tested; the schema is **hosted live** at its canonical `$id`
+(`schema.ribosome.medullaflow.org`) and published to npm as
+`@medullaflow/ribosome-schema`. What's next is in [ROADMAP.md](ROADMAP.md).
 
 ## Licensing
 
@@ -131,7 +131,7 @@ the version-bump procedure, DCO sign-off, and how to add yourself to
 
 ## Attribution
 
-Part of the [medullaflow](https://github.com/medullaflow) project. Primary
-authorship and copyright: [AUTHORS](AUTHORS); primary author Matteo Lacchio —
-[@ookmash](https://github.com/ookmash). Full contributor list: the repository's
+Principal authorship and copyright: [AUTHORS](AUTHORS); primary author
+Matteo Lacchio — [@ookmash](https://github.com/ookmash). Full contributor list:
+the repository's
 [Contributors graph](https://github.com/medullaflow/ribosome-schema/graphs/contributors).
