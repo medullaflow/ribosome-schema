@@ -12,6 +12,7 @@ path = [
   "package.json",
   "bindings/typescript/package.json",
   "bindings/typescript/tsconfig.json",
+  "bindings/typescript/README.md",
   ".gitignore",
 ]
 precedence = "aggregate"

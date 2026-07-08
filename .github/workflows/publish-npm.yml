@@ -5,8 +5,13 @@
 # Gated on a published GitHub Release (not on every tag push) so a publish is
 # always a deliberate, human-triggered action.
 #
-# One-time manual step this workflow cannot do: add an npm automation token as
-# the NPM_TOKEN repo secret (Settings → Secrets and variables → Actions).
+# One-time manual step this workflow cannot do: add an npm token as the
+# NPM_TOKEN repo secret (Settings → Secrets and variables → Actions → New
+# repository secret). Use a Granular Access Token (npmjs.com → Access Tokens
+# → Generate New Token → Granular Access Token) scoped to just this package,
+# "Read and write" permission, with an expiry — least-privilege, and it works
+# for CI without an interactive OTP prompt. A classic "Automation" token also
+# works if you prefer npm's older token type.
 
 name: publish-npm
 
