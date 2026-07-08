@@ -1,0 +1,10 @@
+# The normative schema and licensing/attribution files always need @ookmash's
+# review — a change here changes the meaning of the standard or its licensing.
+/schema/            @ookmash
+/vendor/            @ookmash
+/LICENSE            @ookmash
+/NOTICE             @ookmash
+/AUTHORS            @ookmash
+/REUSE.toml         @ookmash
+/CONTRIBUTING.md    @ookmash
+/bindings/typescript/package.json @ookmash

@@ -4,6 +4,9 @@
 project manifest and the `ribosome.lock.json` output, a conformance corpus, and
 a TypeScript binding.
 
+[![CI](https://github.com/medullaflow/ribosome-schema/actions/workflows/ci.yml/badge.svg)](https://github.com/medullaflow/ribosome-schema/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@medullaflow/ribosome-schema)](https://www.npmjs.com/package/@medullaflow/ribosome-schema)
+[![schema: live](https://img.shields.io/badge/schema-live-brightgreen)](https://schema.ribosome.medullaflow.org/v1/manifest.schema.json)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](#status)
 
@@ -120,7 +123,15 @@ upstream). Per-file detail is machine-readable via [REUSE](https://reuse.softwar
 **You may implement this standard in any product, open or closed, without
 obligation.**
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) — what goes where (schema vs. binding),
+the version-bump procedure, DCO sign-off, and how to add yourself to
+[AUTHORS](AUTHORS).
+
 ## Attribution
 
 Part of the [medullaflow](https://github.com/medullaflow) project. Primary
-author: Matteo Lacchio — [@ookmash](https://github.com/ookmash).
+authorship and copyright: [AUTHORS](AUTHORS); primary author Matteo Lacchio —
+[@ookmash](https://github.com/ookmash). Full contributor list: the repository's
+[Contributors graph](https://github.com/medullaflow/ribosome-schema/graphs/contributors).

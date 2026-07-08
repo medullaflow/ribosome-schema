@@ -14,6 +14,9 @@ path = [
   "bindings/typescript/tsconfig.json",
   "bindings/typescript/README.md",
   ".gitignore",
+  "AUTHORS",
+  "CONTRIBUTING.md",
+  ".github/CODEOWNERS",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "© 2026 ribosome-schema contributors"

@@ -1,0 +1,29 @@
+# =============================================================================
+# ribosome-schema - Authorship and Copyright Holders
+# =============================================================================
+#
+# This file identifies the principal copyright holders and their roles.
+# Contributions to this repository are licensed under the Apache License,
+# Version 2.0 — see LICENSE. (The vendored MCP server.json schema keeps its
+# upstream MIT license; see NOTICE and REUSE.toml.)
+#
+# Format: Name (<URL>) (years) - Role/contributions
+# =============================================================================
+
+ORIGINAL AUTHOR AND PRIMARY DEVELOPER
+    Matteo Lacchio (https://github.com/ookmash) (2026-present)
+    - Original conception of the ribosome standard
+    - Schema design (manifest + lockfile) and conformance corpus
+    - Project maintenance and governance
+
+MAJOR CONTRIBUTORS
+    [Name] (<https://github.com/USERNAME>) (YYYY-present)
+    - Schema / binding contributions
+
+# =============================================================================
+# NOTE: This file records principal authorship and copyright for the record;
+#       individual contributors retain copyright of their own contributions.
+#       For the complete contributor list, see the repository's Contributors
+#       graph on GitHub, or run locally:
+#           git shortlog -sne --all
+# =============================================================================
