@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "mcpServers": {
+    "fs": {
+      "source": "registry",
+      "name": "no-namespace-here"
+    }
+  }
+}

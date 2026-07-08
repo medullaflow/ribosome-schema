@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1",
+  "mcpServers": {
+    "custom": {
+      "source": "inline",
+      "server": {
+        "name": "com.example/broken"
+      }
+    }
+  }
+}

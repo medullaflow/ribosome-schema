@@ -1,0 +1,25 @@
+version = 1
+
+# ribosome-schema is Apache-2.0 throughout, except the vendored third-party
+# server.json schema, which keeps its upstream MIT license. JSON/config files
+# cannot carry comment headers, so their licensing is declared here (REUSE
+# spec, https://reuse.software). *.ts / *.js files carry SPDX headers in-file.
+
+[[annotations]]
+path = [
+  "schema/**",
+  "conformance/**",
+  "package.json",
+  "bindings/typescript/package.json",
+  "bindings/typescript/tsconfig.json",
+  ".gitignore",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "© 2026 ribosome-schema contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "vendor/*.json"
+precedence = "override"
+SPDX-FileCopyrightText = "© Model Context Protocol authors"
+SPDX-License-Identifier = "MIT"

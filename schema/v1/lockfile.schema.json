@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema.ribosome.medullaflow.org/v1/lockfile.schema.json",
+  "title": "ribosome lockfile",
+  "description": "The resolved, materialized output of a manifest: a deduplicated runtime pool plus one isolated environment view per consumer (the project and each MCP server). Declarative and portable by design — it carries no shell-specific activation hooks, so any implementation in any language can consume it.",
+  "type": "object",
+  "required": ["schemaVersion", "resolvedAt", "runtimePool", "project", "mcpServers"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1",
+      "description": "Lockfile format version."
+    },
+    "resolvedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of resolution."
+    },
+    "mcpSchemaVersion": {
+      "type": "string",
+      "description": "The pinned server.json schema version this lockfile was resolved against, e.g. \"2025-12-11\"."
+    },
+    "runtimePool": {
+      "type": "array",
+      "description": "Deduplicated set of runtimes materialized for the whole project. One entry per (tool, exact version); shared by every consumer that needs it.",
+      "items": { "$ref": "#/definitions/PooledRuntime" }
+    },
+    "project": {
+      "$ref": "#/definitions/Environment"
+    },
+    "mcpServers": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/ResolvedMcpServer" }
+    }
+  },
+  "definitions": {
+    "PooledRuntime": {
+      "type": "object",
+      "required": ["id", "tool", "requested", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "description": "Stable pool key, e.g. \"node@24.3.0\"." },
+        "tool": { "type": "string", "description": "Tool name, e.g. \"node\"." },
+        "requested": { "type": "string", "description": "Version spec as requested, e.g. \"24\"." },
+        "version": { "type": "string", "description": "Exact resolved version, e.g. \"24.3.0\"." }
+      }
+    },
+    "Environment": {
+      "type": "object",
+      "description": "A declarative environment delta pointing at specific pool entries. No shell/activation snippets — those are re-derived by the environment provider when applied.",
+      "required": ["pathPrepend", "envVars"],
+      "additionalProperties": false,
+      "properties": {
+        "pathPrepend": {
+          "type": "array",
+          "description": "Directories to prepend to PATH, in order.",
+          "items": { "type": "string" }
+        },
+        "envVars": {
+          "type": "object",
+          "description": "Environment variables to set.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "ResolvedMcpServer": {
+      "type": "object",
+      "required": ["id", "launch", "environment"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "description": "Local server id, matching the manifest key." },
+        "uses": {
+          "type": "array",
+          "description": "Pool ids this server's environment selects.",
+          "items": { "type": "string" }
+        },
+        "launch": { "$ref": "#/definitions/Launch" },
+        "environment": { "$ref": "#/definitions/Environment" },
+        "permissions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Launch": {
+      "description": "Everything needed to start or connect to the server.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["transport", "command"],
+          "additionalProperties": false,
+          "properties": {
+            "transport": { "const": "stdio" },
+            "command": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["transport", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "transport": { "const": "http" },
+            "url": { "type": "string" }
+          }
+        }
+      ]
+    }
+  }
+}

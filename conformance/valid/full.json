@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schema.ribosome.medullaflow.org/v1/manifest.schema.json",
+  "schemaVersion": "1",
+  "runtimes": {
+    "node": "24",
+    "python": "3.12"
+  },
+  "registries": {
+    "default": "official",
+    "sources": {
+      "official": { "type": "mcp-registry-v1", "url": "https://registry.modelcontextprotocol.io" },
+      "github": { "url": "https://api.github.com/mcp/registry" }
+    }
+  },
+  "mcpServers": {
+    "fs": {
+      "source": "registry",
+      "registry": "official",
+      "name": "io.modelcontextprotocol/filesystem",
+      "version": "1.2.0",
+      "permissions": ["read:workspace"]
+    },
+    "custom": {
+      "source": "inline",
+      "server": {
+        "name": "com.example/my-tool",
+        "description": "A custom local MCP server",
+        "version": "0.1.0",
+        "packages": [
+          {
+            "registryType": "npm",
+            "identifier": "@example/my-tool",
+            "version": "0.1.0",
+            "runtimeHint": "npx",
+            "transport": { "type": "stdio" }
+          }
+        ]
+      }
+    },
+    "legacy": {
+      "source": "process",
+      "command": "npx",
+      "args": ["-y", "@foo/bar"],
+      "env": { "FOO_TOKEN": "xxx" },
+      "transport": "stdio"
+    }
+  },
+  "extends": ["./.mcp.json"]
+}

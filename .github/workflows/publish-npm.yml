@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
+
+# Publishes bindings/typescript to npm as @medullaflow/ribosome-schema.
+# Gated on a published GitHub Release (not on every tag push) so a publish is
+# always a deliberate, human-triggered action.
+#
+# One-time manual step this workflow cannot do: add an npm automation token as
+# the NPM_TOKEN repo secret (Settings → Secrets and variables → Actions).
+
+name: publish-npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install
+      - run: npm run build
+      - run: npm publish --access public
+        working-directory: bindings/typescript
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

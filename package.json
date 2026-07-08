@@ -1,0 +1,16 @@
+{
+  "name": "ribosome-schema-repo",
+  "private": true,
+  "description": "Repo-root orchestration only — not published. The publishable artifact is bindings/typescript (@medullaflow/ribosome-schema). No npm workspaces: this repo has exactly one language binding today, and the schema itself (schema/v1/, conformance/) is plain, dependency-free JSON, consumable without npm at all.",
+  "scripts": {
+    "spec:types": "node scripts/gen-types.js",
+    "vendor:check": "node scripts/check-vendor-drift.js",
+    "vendor:update": "node scripts/vendor-update.js",
+    "bindings:install": "npm --prefix bindings/typescript install",
+    "build": "npm run spec:types && npm run bindings:install && npm --prefix bindings/typescript run build",
+    "test": "npm run build && node --test"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.0"
+  }
+}

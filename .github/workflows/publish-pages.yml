@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
+
+# Publishes ONLY the *.schema.json files under schema/, plus schema/CNAME, to
+# GitHub Pages, on every push to main that touches schema/. Nothing else in the
+# repo (docs, conformance corpus, bindings, workflows) is ever part of this
+# artifact.
+#
+# Live at: https://schema.ribosome.medullaflow.org/v1/manifest.schema.json
+#          https://schema.ribosome.medullaflow.org/v1/lockfile.schema.json
+#
+# schema/CNAME (content: schema.ribosome.medullaflow.org) is committed and
+# republished with every deploy. GitHub Pages reads the CNAME file in the
+# deployed artifact to attach the custom domain on Actions-based deployments —
+# the Settings → Pages "custom domain" field alone is not guaranteed to survive
+# every deploy without it, so the file is the source of truth, not the UI field.
+#
+# One-time manual step this workflow cannot do (already done): enable
+# "GitHub Actions" as the Pages source in the repo's Settings → Pages.
+
+name: publish-pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "schema/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      # Stage only *.schema.json (+ CNAME, required for the custom domain) into
+      # a clean directory, so the published artifact can never pick up a stray
+      # non-schema file added to schema/ later (e.g. a README) — deliberately
+      # narrower than `path: schema`.
+      - name: Stage schema JSON + CNAME only
+        run: |
+          test -f schema/CNAME || { echo "::error::schema/CNAME is missing — custom domain would be dropped on deploy"; exit 1; }
+          mkdir -p _site
+          find schema -type f -name '*.schema.json' -print0 | while IFS= read -r -d '' f; do
+            rel="${f#schema/}"
+            mkdir -p "_site/$(dirname "$rel")"
+            cp "$f" "_site/$rel"
+          done
+          cp schema/CNAME _site/CNAME
+          find _site -type f
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

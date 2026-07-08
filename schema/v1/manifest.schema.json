@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema.ribosome.medullaflow.org/v1/manifest.schema.json",
+  "title": "ribosome manifest",
+  "description": "Declares a project's tool/runtime versions and MCP servers so ribosome can resolve and materialize them up front. This is the normative source of truth for the manifest format; TypeScript types are generated from it.",
+  "type": "object",
+  "required": ["schemaVersion"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional pointer to this schema, for editor tooling."
+    },
+    "schemaVersion": {
+      "const": "1",
+      "description": "Manifest format version. Bumped only on breaking changes."
+    },
+    "runtimes": {
+      "type": "object",
+      "description": "Tool/runtime version requirements for the project's own packages and tools. These also act as the version policy for the runtime families that MCP servers need (e.g. declaring node here pins the node used by npm-based MCP servers).",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Requested version spec, e.g. \"24\", \"3.12\", \"20.11.0\"."
+      },
+      "examples": [{ "node": "24", "python": "3.12" }]
+    },
+    "registries": {
+      "type": "object",
+      "description": "Named MCP registry sources this project resolves against.",
+      "required": ["sources"],
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "type": "string",
+          "description": "Name of the source used by registry servers that omit an explicit `registry`."
+        },
+        "sources": {
+          "type": "object",
+          "description": "Map of source name -> registry source.",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/definitions/RegistrySource" }
+        }
+      }
+    },
+    "mcpServers": {
+      "type": "object",
+      "description": "Map of local server id -> server declaration.",
+      "additionalProperties": { "$ref": "#/definitions/McpServer" }
+    },
+    "extends": {
+      "type": "array",
+      "description": "RESERVED (v1): paths to external MCP config files (.mcp.json, .vscode/mcp.json, ...) to import. The import parser lands in a later minor version; declaring this field now keeps that capability additive and non-breaking.",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "definitions": {
+    "RegistrySource": {
+      "type": "object",
+      "required": ["url"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "mcp-registry-v1",
+          "description": "Registry protocol. Selects the registry adapter. Defaults to the official MCP Registry API."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Base URL of the registry."
+        }
+      }
+    },
+    "McpServer": {
+      "description": "An MCP server, declared as one of three sources.",
+      "oneOf": [
+        { "$ref": "#/definitions/RegistryServer" },
+        { "$ref": "#/definitions/InlineServer" },
+        { "$ref": "#/definitions/ProcessServer" }
+      ]
+    },
+    "RegistryServer": {
+      "description": "A server resolved from a named registry by reverse-DNS name (+ optional version). The registry response (server.json) determines runtime, transport and launch — not this manifest.",
+      "type": "object",
+      "required": ["source", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "const": "registry" },
+        "registry": {
+          "type": "string",
+          "description": "Name of a `registries.sources` entry. Defaults to `registries.default`."
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9.-]+/[a-zA-Z0-9._-]+$",
+          "description": "Reverse-DNS server name, e.g. \"io.modelcontextprotocol/filesystem\"."
+        },
+        "version": {
+          "type": "string",
+          "description": "Exact version to resolve. Omit for the registry's latest."
+        },
+        "permissions": { "$ref": "#/definitions/Permissions" }
+      }
+    },
+    "InlineServer": {
+      "description": "A custom server described inline using the standard MCP server.json shape, so it declares its own packages/runtime/env and participates in resolution exactly like a registry server. Enables a natural custom -> publish-to-registry migration.",
+      "type": "object",
+      "required": ["source", "server"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "const": "inline" },
+        "server": {
+          "$ref": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+          "description": "A complete server.json document (vendored & pinned; see spec/vendor/)."
+        },
+        "permissions": { "$ref": "#/definitions/Permissions" }
+      }
+    },
+    "ProcessServer": {
+      "description": "Compatibility bridge: a raw local process launch, field-compatible with .mcp.json / editor MCP config for copy-paste migration. Not runtime-resolved by ribosome — the command is the caller's responsibility (though it runs inside the project runtime pool's environment).",
+      "type": "object",
+      "required": ["source", "command"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "const": "process" },
+        "command": { "type": "string", "minLength": 1, "description": "Executable to launch, e.g. \"npx\"." },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "transport": { "enum": ["stdio", "http"], "default": "stdio" },
+        "url": { "type": "string", "description": "Required when transport is \"http\"." },
+        "permissions": { "$ref": "#/definitions/Permissions" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "transport": { "const": "http" } }, "required": ["transport"] },
+          "then": { "required": ["url"] }
+        }
+      ]
+    },
+    "Permissions": {
+      "type": "array",
+      "description": "Opaque permission scopes requested by this server, passed through to the orchestrator. Semantics are defined by the consuming orchestrator, not by ribosome.",
+      "items": { "type": "string" }
+    }
+  }
+}
