@@ -56,12 +56,43 @@ const manifest = validateManifest(JSON.parse(raw)); // throws SchemaValidationEr
 
 ## Versioning
 
-- `schemaVersion` in the manifest/lockfile is bumped only on breaking changes.
-- The vendored MCP `server.json` schema is **pinned and vendored**
-  (`vendor/`), not fetched live — see [`vendor/README.md`](vendor/README.md)
-  for the drift-detection and update workflow.
-- Adding a language binding (Python, Go, …) is a new sibling under `bindings/`;
-  it does not touch `schema/` or other bindings.
+Four independent version numbers exist in this repo. Each has exactly **one**
+hand-authored source; everything else is generated or checked against it —
+never a second hand-typed copy.
+
+| Version | Hand-authored source | Everywhere else it appears |
+|---|---|---|
+| **Schema format** (`schemaVersion`) | `schema/v1/*.schema.json` → `properties.schemaVersion.const` | `SCHEMA_VERSION` in generated `types.ts`; `$id` path segment; the `schema/v1/` directory name — all checked by [`test/schema-version.test.js`](test/schema-version.test.js), which runs on every `npm test` |
+| **Vendored MCP `server.json`** | `MCP_SERVER_SCHEMA_VERSION` in [`version.ts`](bindings/typescript/src/version.ts) | The vendored filename, `$ref` resolution, `mcpSchemaVersion` stamped into lockfiles — see [`vendor/README.md`](vendor/README.md) |
+| **npm package** (`@medullaflow/ribosome-schema`) | `version` in [`bindings/typescript/package.json`](bindings/typescript/package.json) | Ordinary semver; independent of `schemaVersion` — a patch/minor release (bug fix, docs, non-breaking additive field) does **not** require a `schemaVersion` bump |
+| **ribosome-schema repo** | git tags / GitHub Releases | Drives the npm publish (`publish-npm.yml`) |
+
+**Manifest and lockfile are versioned together, as one schema family** — the
+lockfile is defined as "the resolved output of a manifest," so they always
+move as a couple. `schema/v1/manifest.schema.json` and
+`schema/v1/lockfile.schema.json` must declare the identical `schemaVersion`
+const; the codegen script (`scripts/gen-types.js`) refuses to run if they
+diverge.
+
+**What requires a `schemaVersion` bump:** removing/renaming a field, changing
+a field's type or making an optional field required, or any other change that
+would make a previously-valid document invalid. **What doesn't:** adding a new
+optional field, loosening a constraint, fixing a description/typo.
+
+**How to bump `schemaVersion`** (e.g. `1` → `2`):
+
+1. Create `schema/v2/manifest.schema.json` and `schema/v2/lockfile.schema.json`
+   — copy from `v1`, bump `schemaVersion.const` and `$id` in both.
+   **`schema/v1/` is never edited or deleted** — its `$id` URLs must keep
+   resolving exactly as published, forever (see [D10](https://github.com/medullaflow/ribosome#design-decisions)).
+2. Update `CURRENT_SCHEMA_DIR` in `scripts/gen-types.js` (and in
+   `test/schema-version.test.js`) to `"v2"`.
+3. Run `npm run spec:types`, add conformance fixtures under
+   `conformance/valid|invalid/` for whatever changed, `npm test`.
+4. Bump the npm package's major version; note the break in `CHANGELOG.md`.
+
+Adding a language binding (Python, Go, …) is a new sibling under `bindings/`;
+it does not touch `schema/` or other bindings.
 
 ## Development
 

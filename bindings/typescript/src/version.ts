@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
 
-// Pinned versions this package embeds. These constants are the single place
-// that records "what a ribosome-schema vX release means": the manifest format,
-// the lockfile format, and the exact external MCP server.json contract.
-
-/** Version of the ribosome project manifest format (see schema/v1/manifest.schema.json). */
-export const MANIFEST_SCHEMA_VERSION = "1" as const;
-
-/** Version of the ribosome lockfile format (see schema/v1/lockfile.schema.json). */
-export const LOCKFILE_SCHEMA_VERSION = "1" as const;
+// Hand-authored pins for EXTERNAL dependencies this package vendors. This is
+// NOT where the ribosome schema's own version lives — that's `SCHEMA_VERSION`,
+// generated into types.ts directly from schema/v1/*.schema.json's
+// `schemaVersion` const (see scripts/gen-types.js), so it can never drift from
+// the schema files themselves. This file only records facts we don't author
+// (what upstream MCP version we've chosen to vendor).
 
 /**
  * Pinned MCP `server.json` schema version. Vendored under vendor/ and

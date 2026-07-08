@@ -6,6 +6,14 @@
 
 // McpServerJson is hand-typed (see mcp-server-types.ts); the manifest $ref maps to it.
 import type { McpServerJson } from "./mcp-server-types";
+
+/**
+ * Version of the ribosome manifest/lockfile schema family. The single source of
+ * truth is schema/v1/*.schema.json's `schemaVersion` const — this is
+ * extracted from there, not hand-typed. Manifest and lockfile always share one
+ * version; see README.md "Versioning".
+ */
+export const SCHEMA_VERSION = "1" as const;
 /**
  * An MCP server, declared as one of three sources.
  */
