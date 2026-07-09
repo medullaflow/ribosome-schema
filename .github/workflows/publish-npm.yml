@@ -31,16 +31,18 @@
 # not yet support npm's OIDC trusted publishing (oven-sh/bun#24855, still
 # open) — so the actual publish step stays on the npm CLI specifically.
 #
-# --no-provenance: trusted publishing auto-generates a provenance attestation
-# (no --provenance flag needed for that — npm does it on its own once it
-# detects OIDC-capable CI) via sigstore. That's a SEPARATE feature from
-# trusted publishing itself: OIDC is the auth (no long-lived token, still
-# true with this flag), provenance is an extra supply-chain attestation on
-# top. Disabled here because the npm CLI's own global install in this runner
-# is missing the sigstore module it needs for it (`Cannot find module
-# 'sigstore'` in libnpmpublish/provenance.js — an npm packaging bug, not
-# something this workflow controls). Revisit removing this flag once that's
-# fixed upstream.
+# Do NOT `npm install -g npm@latest`: Node 24's setup-node image already
+# bundles npm >= 11.5.1 (verified: 11.16.0), so it already satisfies trusted
+# publishing's version floor — and reinstalling "latest" from the registry
+# is what broke this. `libnpmpublish` unconditionally `require`s `sigstore`
+# at module load (trusted publishing auto-generates a provenance attestation
+# — no --provenance flag needed to trigger the attempt — so that module
+# always loads on this path), and the freshly npm-installed "latest" build
+# was missing it (`Cannot find module 'sigstore'`), while the bundled one has
+# it correctly. Passing --no-provenance does NOT avoid this: it only skips
+# using the module once loaded, not the `require` itself, so the crash
+# happens either way. The bundled npm sidesteps the bug entirely — no flag
+# needed, and provenance attestation works as a bonus.
 
 name: publish-npm
 
@@ -64,10 +66,7 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      # Trusted publishing requires npm CLI >= 11.5.1; pin explicitly rather
-      # than trust whatever ships with the node-version image.
-      - run: npm install -g npm@latest
       # No NODE_AUTH_TOKEN here — setting one would make npm fall back to
       # legacy token auth instead of OIDC trusted publishing.
-      - run: npm publish --access public --no-provenance
+      - run: npm publish --access public
         working-directory: bindings/typescript
