@@ -30,6 +30,17 @@
 # tooling, see docs/ARCHITECTURE.md in ribosome, D14), but `bun publish` does
 # not yet support npm's OIDC trusted publishing (oven-sh/bun#24855, still
 # open) — so the actual publish step stays on the npm CLI specifically.
+#
+# --no-provenance: trusted publishing auto-generates a provenance attestation
+# (no --provenance flag needed for that — npm does it on its own once it
+# detects OIDC-capable CI) via sigstore. That's a SEPARATE feature from
+# trusted publishing itself: OIDC is the auth (no long-lived token, still
+# true with this flag), provenance is an extra supply-chain attestation on
+# top. Disabled here because the npm CLI's own global install in this runner
+# is missing the sigstore module it needs for it (`Cannot find module
+# 'sigstore'` in libnpmpublish/provenance.js — an npm packaging bug, not
+# something this workflow controls). Revisit removing this flag once that's
+# fixed upstream.
 
 name: publish-npm
 
@@ -58,5 +69,5 @@ jobs:
       - run: npm install -g npm@latest
       # No NODE_AUTH_TOKEN here — setting one would make npm fall back to
       # legacy token auth instead of OIDC trusted publishing.
-      - run: npm publish --access public
+      - run: npm publish --access public --no-provenance
         working-directory: bindings/typescript

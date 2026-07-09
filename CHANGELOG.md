@@ -4,6 +4,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/)
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-07-09
+
+Note: 0.1.3's tag exists but was never successfully published (npm publish
+failed in CI, see below) — treat it as superseded, like 0.1.0/0.1.1 before it.
+
+### Fixed
+- `publish-npm.yml` now passes `--no-provenance` to `npm publish`. Trusted
+  publishing auto-generates a provenance attestation (no `--provenance` flag
+  needed for npm to attempt it — it's automatic once npm detects OIDC-capable
+  CI), and that attempt failed with `Cannot find module 'sigstore'` — an npm
+  CLI packaging bug in this runner's global `npm@latest` install, unrelated to
+  our workflow's auth setup. Trusted publishing (OIDC, zero long-lived token)
+  is unaffected by this flag — provenance is a separate, additional
+  attestation feature layered on top of it, not the same thing. Revisit
+  dropping the flag once the upstream sigstore packaging issue is fixed.
+
 ## [0.1.3] - 2026-07-09
 
 ### Changed
