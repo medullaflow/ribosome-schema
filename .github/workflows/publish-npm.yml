@@ -25,6 +25,11 @@
 #   Repository: ribosome-schema
 #   Workflow filename: publish-npm.yml   (filename only, not the path — case-sensitive)
 #   Allowed actions: npm publish
+#
+# Two toolchains, deliberately: install/build run on bun (this repo's own
+# tooling, see docs/ARCHITECTURE.md in ribosome, D14), but `bun publish` does
+# not yet support npm's OIDC trusted publishing (oven-sh/bun#24855, still
+# open) — so the actual publish step stays on the npm CLI specifically.
 
 name: publish-npm
 
@@ -41,6 +46,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run build
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
@@ -48,8 +56,6 @@ jobs:
       # Trusted publishing requires npm CLI >= 11.5.1; pin explicitly rather
       # than trust whatever ships with the node-version image.
       - run: npm install -g npm@latest
-      - run: npm install
-      - run: npm run build
       # No NODE_AUTH_TOKEN here — setting one would make npm fall back to
       # legacy token auth instead of OIDC trusted publishing.
       - run: npm publish --access public

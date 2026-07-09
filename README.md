@@ -65,7 +65,7 @@ never a second hand-typed copy.
 
 | Version | Hand-authored source | Everywhere else it appears |
 |---|---|---|
-| **Schema format** (`schemaVersion`) | `schema/v1/*.schema.json` → `properties.schemaVersion.const` | `SCHEMA_VERSION` in generated `types.ts`; `$id` path segment; the `schema/v1/` directory name — all checked by [`test/schema-version.test.js`](test/schema-version.test.js), which runs on every `npm test` |
+| **Schema format** (`schemaVersion`) | `schema/v1/*.schema.json` → `properties.schemaVersion.const` | `SCHEMA_VERSION` in generated `types.ts`; `$id` path segment; the `schema/v1/` directory name — all checked by [`test/schema-version.test.js`](test/schema-version.test.js), which runs on every `bun run test` |
 | **Vendored MCP `server.json`** | `MCP_SERVER_SCHEMA_VERSION` in [`version.ts`](bindings/typescript/src/version.ts) | The vendored filename, `$ref` resolution, `mcpSchemaVersion` stamped into lockfiles — see [`vendor/README.md`](vendor/README.md) |
 | **npm package** (`@medullaflow/ribosome-schema`) | `version` in [`bindings/typescript/package.json`](bindings/typescript/package.json) | Ordinary semver; independent of `schemaVersion` — a patch/minor release (bug fix, docs, non-breaking additive field) does **not** require a `schemaVersion` bump |
 | **ribosome-schema repo** | git tags / GitHub Releases | Drives the npm publish (`publish-npm.yml`) |
@@ -91,8 +91,8 @@ optional field, loosening a constraint, fixing a description/typo.
    version is additive (`v2/` alongside `v1/`), never a mutation of the old one.
 2. Update `CURRENT_SCHEMA_DIR` in `scripts/gen-types.js` (and in
    `test/schema-version.test.js`) to `"v2"`.
-3. Run `npm run spec:types`, add conformance fixtures under
-   `conformance/valid|invalid/` for whatever changed, `npm test`.
+3. Run `bun run spec:types`, add conformance fixtures under
+   `conformance/valid|invalid/` for whatever changed, `bun run test`.
 4. Bump the npm package's major version; note the break in `CHANGELOG.md`.
 
 Adding a language binding (Python, Go, …) is a new sibling under `bindings/`;
@@ -101,11 +101,17 @@ it does not touch `schema/` or other bindings.
 ## Development
 
 ```bash
-npm install        # root tooling deps (codegen)
-npm run spec:types # regenerate bindings/typescript/src/types.ts from schema/v1/
-npm test           # build the TS binding + run the conformance corpus against it
-npm run vendor:check   # verify the vendored server.json against its pin (local + upstream)
+bun install         # root tooling deps (codegen)
+bun run spec:types  # regenerate bindings/typescript/src/types.ts from schema/v1/
+bun run test        # build the TS binding + run the conformance corpus against it
+bun run vendor:check # verify the vendored server.json against its pin (local + upstream)
 ```
+
+Toolchain is [bun](https://bun.sh), not Node — for consistency with
+[ribosome](https://github.com/medullaflow/ribosome)'s own toolchain (see its
+`docs/ARCHITECTURE.md` D14). One deliberate exception: `publish-npm.yml`'s
+final publish step stays on the npm CLI, since `bun publish` doesn't yet
+support npm's OIDC trusted publishing.
 
 ## Status
 

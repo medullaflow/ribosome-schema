@@ -1,14 +1,17 @@
 {
   "name": "ribosome-schema-repo",
   "private": true,
-  "description": "Repo-root orchestration only — not published. The publishable artifact is bindings/typescript (@medullaflow/ribosome-schema). No npm workspaces: this repo has exactly one language binding today, and the schema itself (schema/v1/, conformance/) is plain, dependency-free JSON, consumable without npm at all.",
+  "description": "Repo-root orchestration only — not published. The publishable artifact is bindings/typescript (@medullaflow/ribosome-schema). No npm workspaces: this repo has exactly one language binding today, and the schema itself (schema/v1/, conformance/) is plain, dependency-free JSON, consumable without bun/npm at all.",
+  "engines": {
+    "bun": ">=1.3.0"
+  },
   "scripts": {
-    "spec:types": "node scripts/gen-types.js",
-    "vendor:check": "node scripts/check-vendor-drift.js",
-    "vendor:update": "node scripts/vendor-update.js",
-    "bindings:install": "npm --prefix bindings/typescript install",
-    "build": "npm run spec:types && npm run bindings:install && npm --prefix bindings/typescript run build",
-    "test": "npm run build && node --test"
+    "spec:types": "bun scripts/gen-types.js",
+    "vendor:check": "bun scripts/check-vendor-drift.js",
+    "vendor:update": "bun scripts/vendor-update.js",
+    "bindings:install": "cd bindings/typescript && bun install",
+    "build": "bun run spec:types && bun run bindings:install && cd bindings/typescript && bun run build",
+    "test": "bun run build && bun test"
   },
   "devDependencies": {
     "json-schema-to-typescript": "^15.0.0"

@@ -6,3 +6,4 @@ dist/
 # generated at build time (scripts/copy-schemas.js) from the repo-root LICENSE
 # — never hand-edit or commit this copy, it would drift from the source.
 bindings/typescript/LICENSE
+bun.lock

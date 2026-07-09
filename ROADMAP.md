@@ -14,7 +14,7 @@ Status legend: ✅ done · 🚧 in progress · ⬜ not started
 - **The v1 schemas** — `manifest.schema.json` + `lockfile.schema.json`,
   normative, with a conformance corpus and generated TypeScript types.
 - **Vendored + pinned** MCP `server.json` schema, with drift detection
-  (`npm run vendor:check`) and a deliberate update flow (`npm run vendor:update`).
+  (`bun run vendor:check`) and a deliberate update flow (`bun run vendor:update`).
 - **Live hosting** at the canonical `$id`,
   `https://schema.ribosome.medullaflow.org/v1/…`, published by
   `publish-pages.yml` (deploys *only* the `*.schema.json` files).

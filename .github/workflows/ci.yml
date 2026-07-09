@@ -16,12 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            bindings/typescript/package-lock.json
-      - run: npm install
-      - run: npm test
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run test

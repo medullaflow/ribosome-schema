@@ -10,13 +10,13 @@ follow a specific, deliberate process.
 ## What goes where
 
 - **A change to the format itself** (a field, a constraint) → edit
-  `schema/v1/*.schema.json`, then `npm run spec:types` and add conformance
+  `schema/v1/*.schema.json`, then `bun run spec:types` and add conformance
   fixtures under `conformance/valid|invalid/`. If it's a breaking change, follow
   the version-bump procedure in the README (a new `schema/v2/`, never editing
   `v1/`).
 - **A change to the TypeScript binding** (validation, ergonomics) →
   `bindings/typescript/src/`. Do not hand-edit generated files (`types.ts`).
-- **Documentation, tooling** → as appropriate; keep `npm test` green.
+- **Documentation, tooling** → as appropriate; keep `bun run test` green.
 
 ## License
 
