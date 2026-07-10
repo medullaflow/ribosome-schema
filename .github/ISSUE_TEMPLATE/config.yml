@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
+
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/medullaflow/ribosome-schema/security/policy
+    about: Please do not open a public issue for security reports — see SECURITY.md.
