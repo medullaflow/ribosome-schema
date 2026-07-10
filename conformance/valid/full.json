@@ -9,7 +9,14 @@
     "default": "official",
     "sources": {
       "official": { "type": "mcp-registry-v1", "url": "https://registry.modelcontextprotocol.io" },
-      "github": { "url": "https://api.github.com/mcp/registry" }
+      "github": { "url": "https://api.github.com/mcp/registry" },
+      "pulsemcp": {
+        "url": "https://api.pulsemcp.com",
+        "auth": [
+          { "header": "X-API-Key", "envVar": "PULSEMCP_API_KEY" },
+          { "header": "X-Tenant-ID", "envVar": "PULSEMCP_TENANT_ID" }
+        ]
+      }
     }
   },
   "mcpServers": {

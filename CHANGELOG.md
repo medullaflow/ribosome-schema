@@ -2,6 +2,18 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.8] - 2026-07-10
+
+### Added
+- `RegistrySource` gains an optional `auth` field: an array of
+  `{ header, envVar }` pairs naming HTTP headers to send when resolving
+  against that source, with each value read from the named environment
+  variable at resolve time -- never a literal credential in the manifest.
+  Needed for real subregistries beyond the unauthenticated official one (e.g.
+  PulseMCP's public v0.1 API requires `X-API-Key` + `X-Tenant-ID`), which the
+  sibling `ribosome` repo's registry adapter is starting to support. Purely
+  additive: existing manifests with no `auth` field are unaffected.
+
 ## [0.1.7] - 2026-07-10
 
 ### Added

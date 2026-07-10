@@ -69,6 +69,28 @@
           "type": "string",
           "format": "uri",
           "description": "Base URL of the registry."
+        },
+        "auth": {
+          "type": "array",
+          "description": "HTTP headers to send when resolving against this source, e.g. for an authenticated subregistry. Each header's value is read from the named environment variable at resolve time -- never store a literal credential here.",
+          "items": { "$ref": "#/definitions/RegistryAuthHeader" }
+        }
+      }
+    },
+    "RegistryAuthHeader": {
+      "type": "object",
+      "required": ["header", "envVar"],
+      "additionalProperties": false,
+      "properties": {
+        "header": {
+          "type": "string",
+          "minLength": 1,
+          "description": "HTTP header name, e.g. \"Authorization\" or \"X-Api-Key\"."
+        },
+        "envVar": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the environment variable to read the header's literal value from at resolve time."
         }
       }
     },
