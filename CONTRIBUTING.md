@@ -42,6 +42,12 @@ header; JSON/config files are covered by [`REUSE.toml`](REUSE.toml). By
 contributing you agree your contribution is licensed under Apache-2.0; you
 retain copyright of your own work.
 
+**If your change vendors/copies third-party content into this repo** (a new
+file under `vendor/`, or anything similar) — not an ordinary package-manager
+dependency, which needs nothing — add an entry to `NOTICE`'s THIRD-PARTY
+COMPONENTS section in the same PR. This is the one case that needs a human
+to remember it; nothing checks for it automatically.
+
 ## Adding yourself to AUTHORS
 
 Submit a PR adding yourself to [`AUTHORS`](AUTHORS):

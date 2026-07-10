@@ -2,6 +2,36 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.6] - 2026-07-10
+
+### Fixed
+- `bindings/typescript/README.md` (the file npm renders as the package page)
+  linked bare `[LICENSE](LICENSE)` — a gitignored build artifact, so the link
+  404s when browsing this file on GitHub and only resolved inside the
+  published npm tarball. Fixed with an absolute GitHub URL.
+- Stale `npm run`/`npm test` references (leftover from before the bun
+  migration) in code comments and user-facing messages across
+  `scripts/copy-schemas.js`, `scripts/gen-types.js`, `scripts/vendor-update.js`,
+  `bindings/typescript/src/version.ts`, `test/conformance.test.js`,
+  `test/schema-version.test.js`, `vendor/README.md`.
+- `scripts/vendor-update.js` shelled out to `node` explicitly instead of
+  `bun` — a real toolchain-coherence bug, not just a comment.
+
+### Added
+- `package.json` metadata: `homepage`, `bugs`, and `publishConfig.access:
+  "public"` (defense-in-depth — `publish-npm.yml` already passes
+  `--access public` explicitly, but a manual publish wouldn't).
+- A Security section in README.md linking `SECURITY.md`.
+- A "Linting, formatting, and license compliance" section in
+  `CONTRIBUTING.md` documenting the Biome/reuse-lint tooling.
+
+### Changed
+- `ROADMAP.md` restructured as a GitHub-milestones pointer, mirroring the
+  sibling `ribosome` repo. 5 new milestones created with architectural-level
+  issues: Core Schema & Publishing (closed, retrospective), Normative
+  Specification, Ecosystem Integration, Conformance Suite Evolution,
+  Language Bindings.
+
 ## [0.1.5] - 2026-07-10
 
 ### Fixed

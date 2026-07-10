@@ -27,9 +27,14 @@ Copyright: Model Context Protocol authors
 Location: vendor/server.schema.2025-12-11.json
 Source: https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json
 
-Runtime/dev dependencies of bindings/typescript (ajv, ajv-formats, typescript)
-and of the repo tooling (json-schema-to-typescript) remain under their
-respective licenses; see each package.json.
+Ordinary runtime/dev dependencies, resolved via the package manager (never
+vendored/copied into this repo), remain under their own licenses — each
+ships its own LICENSE inside its own package; see package.json and
+node_modules/<pkg>/LICENSE. This entry is deliberately generic: it should
+never need an update just because an ordinary dependency was added, removed,
+or bumped. Only vendored/bundled third-party content (physically copied into
+this repo or a distributed artifact, like the entry above) needs its own
+entry here — see CONTRIBUTING.md.
 
 ================================================================================
 Disclaimer: Third-party components remain under their respective licenses.

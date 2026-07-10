@@ -11,11 +11,10 @@ a TypeScript binding.
 [![Status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](#status)
 
 This repo holds **the standard, and only the standard** — no resolver, no
-runtime, no orchestration logic. It is **Apache-2.0, so anyone can implement it**
-in any product, open or closed, with no obligation. Resolvers/tools consume it
-as a dependency rather than embedding it; the
-[ribosome](https://github.com/medullaflow/ribosome) resolver is the reference
-consumer, but the standard stands on its own.
+runtime, no orchestration logic. Resolvers/tools consume it as a dependency
+rather than embedding it; the [ribosome](https://github.com/medullaflow/ribosome)
+resolver is the reference consumer, but the standard stands on its own. See
+[Licensing](#licensing) below.
 
 ## What's here
 
@@ -122,12 +121,10 @@ tested; the schema is **hosted live** at its canonical `$id`
 
 ## Licensing
 
-Apache-2.0 throughout, except the vendored MCP `server.json` schema (MIT,
-upstream). Per-file detail is machine-readable via [REUSE](https://reuse.software)
-(`REUSE.toml`); full texts in [`LICENSES/`](LICENSES/). See [NOTICE](NOTICE).
-
-**You may implement this standard in any product, open or closed, without
-obligation.**
+**Apache-2.0** — see [LICENSE](LICENSE) and [NOTICE](NOTICE) for what that
+means and why. Per-file detail (the one vendored exception) is
+machine-readable via [REUSE](https://reuse.software) (`REUSE.toml`); full
+texts in [`LICENSES/`](LICENSES/).
 
 ## Security
 
