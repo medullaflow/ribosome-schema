@@ -2,6 +2,18 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.7] - 2026-07-10
+
+### Added
+- `validateMcpServerJson`/`checkMcpServerJson`: runtime validation for a
+  standalone `McpServerJson` document against the vendored schema, alongside
+  the existing `validateManifest`/`validateLockfile`. Until now, `McpServerJson`
+  only had a compile-time TypeScript type -- fine for data already known-valid,
+  but not for a descriptor arriving from an untrusted source (e.g. a live MCP
+  registry HTTP response), which needs checking at that trust boundary like
+  everything else this package validates. Needed by the sibling `ribosome`
+  repo's registry adapter work.
+
 ## [0.1.6] - 2026-07-10
 
 ### Fixed

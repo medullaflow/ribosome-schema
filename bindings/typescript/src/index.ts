@@ -12,8 +12,10 @@ export * from "./mcp-server-types";
 export * from "./types";
 export {
   checkManifest,
+  checkMcpServerJson,
   SchemaValidationError,
   validateLockfile,
   validateManifest,
+  validateMcpServerJson,
 } from "./validate";
 export * from "./version";

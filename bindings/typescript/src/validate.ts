@@ -10,6 +10,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import Ajv, { type ValidateFunction } from "ajv";
 import addFormats from "ajv-formats";
+import type { McpServerJson } from "./mcp-server-types";
 import type { RibosomeLockfile, RibosomeManifest } from "./types";
 import { MCP_SERVER_SCHEMA_VERSION } from "./version";
 
@@ -34,13 +35,31 @@ ajv.addSchema(serverSchema);
 const validateManifestFn = ajv.compile<RibosomeManifest>(manifestSchema);
 const validateLockfileFn = ajv.compile<RibosomeLockfile>(lockfileSchema);
 
+function getRegisteredServerSchemaValidator(): ValidateFunction<McpServerJson> {
+  // Already registered above via addSchema (for the manifest's $ref to resolve
+  // locally) -- getSchema() retrieves that same compiled validator rather than
+  // compiling the identical $id a second time, which ajv rejects as a duplicate.
+  const fn = ajv.getSchema<McpServerJson>(serverSchema.$id as string);
+  if (!fn) {
+    throw new Error(`ajv failed to register the vendored server.json schema (${serverSchema.$id})`);
+  }
+  return fn;
+}
+const validateServerJsonFn = getRegisteredServerSchemaValidator();
+
+const SCHEMA_LABELS = {
+  manifest: "ribosome manifest",
+  lockfile: "ribosome lockfile",
+  "mcp-server-json": "MCP server.json",
+} as const;
+
 /** Thrown when input does not conform to a ribosome schema. Lists every error. */
 export class SchemaValidationError extends Error {
   constructor(
-    readonly what: "manifest" | "lockfile",
+    readonly what: keyof typeof SCHEMA_LABELS,
     readonly errors: string[],
   ) {
-    super(`Invalid ribosome ${what}:\n${errors.map((e) => `  - ${e}`).join("\n")}`);
+    super(`Invalid ${SCHEMA_LABELS[what]}:\n${errors.map((e) => `  - ${e}`).join("\n")}`);
     this.name = "SchemaValidationError";
   }
 }
@@ -69,4 +88,23 @@ export function validateLockfile(data: unknown): RibosomeLockfile {
 export function checkManifest(data: unknown): { valid: boolean; errors: string[] } {
   const valid = validateManifestFn(data) as boolean;
   return { valid, errors: valid ? [] : formatErrors(validateManifestFn) };
+}
+
+/**
+ * Validate and narrow untyped input to a McpServerJson, or throw. For
+ * consumers resolving a server descriptor from an untrusted source (e.g. a
+ * live registry HTTP response) -- the TypeScript type alone only helps once
+ * the data is already trusted; this is the runtime check at that boundary.
+ */
+export function validateMcpServerJson(data: unknown): McpServerJson {
+  if (!validateServerJsonFn(data)) {
+    throw new SchemaValidationError("mcp-server-json", formatErrors(validateServerJsonFn));
+  }
+  return data;
+}
+
+/** Non-throwing McpServerJson check, for tooling that wants a boolean + errors. */
+export function checkMcpServerJson(data: unknown): { valid: boolean; errors: string[] } {
+  const valid = validateServerJsonFn(data) as boolean;
+  return { valid, errors: valid ? [] : formatErrors(validateServerJsonFn) };
 }
