@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1",
+  "registries": {
+    "default": "private",
+    "sources": {
+      "private": {
+        "url": "https://mcp.example.internal",
+        "auth": [{ "header": "Authorization" }]
+      }
+    }
+  }
+}
