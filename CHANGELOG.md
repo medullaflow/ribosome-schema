@@ -2,6 +2,43 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.5] - 2026-07-10
+
+### Fixed
+- **`bindings/typescript/src/mcp-server-types.ts` carried the wrong SPDX
+  header** — `AGPL-3.0-or-later` / "ribosome contributors", copy-pasted from
+  the sibling `ribosome` repo. Corrected to `Apache-2.0` / "ribosome-schema
+  contributors", matching every other file here. This repo is Apache-2.0
+  throughout; the wrong header was a metadata defect, not a behavior change,
+  but a real compliance issue in the previously-published 0.1.3.
+- `reuse lint` (newly enforced, see below) surfaced pre-existing REUSE.toml
+  coverage gaps: `CHANGELOG.md`, `NOTICE`, `README.md`, `LICENSE`,
+  `REUSE.toml` itself, both `bun.lock` files, and `vendor/README.md` (only
+  `vendor/*.json` was covered, not the README alongside it) had no license
+  annotation anywhere. All now covered.
+
+### Added
+- **Biome** as the linter + formatter, enforced at three points: local
+  (`bun run lint`/`lint:fix`/`format`), a new pre-commit hook (`.githooks/`,
+  wired via `core.hooksPath`, neither of which existed here before), and CI.
+- **`reuse lint`** (via `fsfe/reuse-action`) now runs in CI — `REUSE.toml`
+  existed but was never actually checked until now.
+- Community health files: `CODE_OF_CONDUCT.md` (Contributor Covenant),
+  `SECURITY.md`, and issue templates (bug report, feature/schema-change
+  request, `config.yml` disabling blank issues).
+- GitHub repo settings aligned with the sibling `ribosome` repo's governance
+  baseline: secret scanning + push protection + Dependabot security updates +
+  private vulnerability reporting all enabled, a branch ruleset on `main`
+  requiring `lint`/`test`/`reuse-lint`/`check-dco` status checks (maintainer
+  bypass preserved), repo description/topics, delete-branch-on-merge.
+  GitHub Pages (serving `schema.ribosome.medullaflow.org`) deliberately left
+  untouched — a legitimate, intentional use here, unlike the accidental
+  deployment disabled on `ribosome`.
+
+### Changed
+- The DCO workflow's job renamed `check` → `check-dco`, for an unambiguous
+  required-status-check name.
+
 ## [0.1.3] - 2026-07-09
 
 ### Changed
