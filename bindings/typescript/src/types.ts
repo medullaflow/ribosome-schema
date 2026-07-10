@@ -101,6 +101,20 @@ export interface RegistrySource {
    * Base URL of the registry.
    */
   url: string;
+  /**
+   * HTTP headers to send when resolving against this source, e.g. for an authenticated subregistry. Each header's value is read from the named environment variable at resolve time -- never store a literal credential here.
+   */
+  auth?: RegistryAuthHeader[];
+}
+export interface RegistryAuthHeader {
+  /**
+   * HTTP header name, e.g. "Authorization" or "X-Api-Key".
+   */
+  header: string;
+  /**
+   * Name of the environment variable to read the header's literal value from at resolve time.
+   */
+  envVar: string;
 }
 /**
  * A server resolved from a named registry by reverse-DNS name (+ optional version). The registry response (server.json) determines runtime, transport and launch — not this manifest.

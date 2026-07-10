@@ -1,6 +1,6 @@
 {
   "name": "@medullaflow/ribosome-schema",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "TypeScript types, validation, and version pins for the ribosome standard (project manifest + lockfile). The normative artifact is the JSON Schema itself; this package is a convenience layer on top.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
