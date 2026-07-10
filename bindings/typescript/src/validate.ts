@@ -13,7 +13,7 @@ import addFormats from "ajv-formats";
 import type { RibosomeLockfile, RibosomeManifest } from "./types";
 import { MCP_SERVER_SCHEMA_VERSION } from "./version";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: raw parsed JSON, genuinely untyped until ajv validates/narrows it
 function loadSchema(relativePath: string): any {
   return JSON.parse(readFileSync(join(__dirname, relativePath), "utf8"));
 }
@@ -40,7 +40,7 @@ export class SchemaValidationError extends Error {
     readonly what: "manifest" | "lockfile",
     readonly errors: string[],
   ) {
-    super(`Invalid ribosome ${what}:\n` + errors.map((e) => `  - ${e}`).join("\n"));
+    super(`Invalid ribosome ${what}:\n${errors.map((e) => `  - ${e}`).join("\n")}`);
     this.name = "SchemaValidationError";
   }
 }

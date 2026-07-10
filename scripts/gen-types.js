@@ -70,7 +70,10 @@ async function gen(schema, rootName) {
         `files, don't patch this generated output.`,
     );
   }
-  for (const [name, schema] of [["manifest", manifestSchema], ["lockfile", lockfileSchema]]) {
+  for (const [name, schema] of [
+    ["manifest", manifestSchema],
+    ["lockfile", lockfileSchema],
+  ]) {
     const expected = `/${CURRENT_SCHEMA_DIR}/`;
     if (!schema.$id?.includes(expected)) {
       throw new Error(
@@ -94,7 +97,7 @@ async function gen(schema, rootName) {
     " * Version of the ribosome manifest/lockfile schema family. The single source of",
     ` * truth is schema/${CURRENT_SCHEMA_DIR}/*.schema.json's \`schemaVersion\` const — this is`,
     " * extracted from there, not hand-typed. Manifest and lockfile always share one",
-    " * version; see README.md \"Versioning\".",
+    ' * version; see README.md "Versioning".',
     " */",
     `export const SCHEMA_VERSION = ${JSON.stringify(manifestVersion)} as const;`,
     "",

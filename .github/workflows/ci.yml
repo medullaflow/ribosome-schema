@@ -12,6 +12,21 @@ permissions:
   contents: read
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      # Biome (lint + format + import-organize) in CI mode. Pinned to match
+      # the @biomejs/biome devDependency in package.json — keep in sync.
+      - run: bunx @biomejs/biome@2.5.3 ci
+
+  reuse-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: fsfe/reuse-action@v6
+
   test:
     runs-on: ubuntu-latest
     steps:

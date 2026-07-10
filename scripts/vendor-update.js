@@ -47,7 +47,9 @@ const outFile = join(root, "vendor", `server.schema.${date}.json`);
 
   execFileSync("node", [join(__dirname, "gen-types.js")], { stdio: "inherit" });
 
-  console.log(`\n✓ vendored server.json ${date} (sha256 ${sha256.slice(0, 12)}…), pin + types updated.`);
+  console.log(
+    `\n✓ vendored server.json ${date} (sha256 ${sha256.slice(0, 12)}…), pin + types updated.`,
+  );
   console.log("\nNow, by hand, in this PR:");
   console.log("  1. Update the table in vendor/README.md (version + SHA-256).");
   console.log("  2. Add/adjust conformance fixtures for any new/changed fields.");

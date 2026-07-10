@@ -8,7 +8,12 @@
 // (e.g. Python) can be added as siblings under bindings/ without touching
 // this package or the schemas.
 
-export * from "./types";
 export * from "./mcp-server-types";
+export * from "./types";
+export {
+  checkManifest,
+  SchemaValidationError,
+  validateLockfile,
+  validateManifest,
+} from "./validate";
 export * from "./version";
-export { validateManifest, validateLockfile, checkManifest, SchemaValidationError } from "./validate";

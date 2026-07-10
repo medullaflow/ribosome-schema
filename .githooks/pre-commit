@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
+
+# Native git hook, versioned in .githooks/ and wired via `core.hooksPath`
+# (see scripts/setup-git-hooks.js, run automatically by `bun install`).
+# Blocks commits that break Biome lint/format on staged files.
+#
+# Full REUSE/SPDX compliance is checked in CI only (`reuse lint`), not here —
+# it needs a Python toolchain this repo's own tooling doesn't otherwise use.
+
+set -e
+
+./node_modules/.bin/biome check --staged --no-errors-on-unmatched

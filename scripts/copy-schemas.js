@@ -24,4 +24,6 @@ cpSync(join(root, "schema", "v1"), join(outDir, "schema", "v1"), { recursive: tr
 cpSync(join(root, "vendor"), join(outDir, "vendor"), { recursive: true });
 cpSync(join(root, "LICENSE"), join(bindingDir, "LICENSE"));
 
-console.log("copied schema/ + vendor/ -> bindings/typescript/dist/, LICENSE -> bindings/typescript/LICENSE");
+console.log(
+  "copied schema/ + vendor/ -> bindings/typescript/dist/, LICENSE -> bindings/typescript/LICENSE",
+);

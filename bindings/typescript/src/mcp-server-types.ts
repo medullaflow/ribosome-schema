@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-// SPDX-FileCopyrightText: © 2026 ribosome contributors
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
 
 // A thin, hand-maintained TypeScript view of the vendored MCP `server.json`
 // schema (spec/vendor/). We deliberately do NOT generate this: the full schema

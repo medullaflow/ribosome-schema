@@ -58,5 +58,7 @@ const sha = (buf) => createHash("sha256").update(buf).digest("hex");
     for (const p of problems) console.error(`  - ${p}`);
     process.exit(1);
   }
-  console.log(`✓ server.json ${pin.version} verified (local + upstream match pin ${pin.sha256.slice(0, 12)}…)`);
+  console.log(
+    `✓ server.json ${pin.version} verified (local + upstream match pin ${pin.sha256.slice(0, 12)}…)`,
+  );
 })();

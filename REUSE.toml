@@ -1,9 +1,12 @@
 version = 1
 
 # ribosome-schema is Apache-2.0 throughout, except the vendored third-party
-# server.json schema, which keeps its upstream MIT license. JSON/config files
-# cannot carry comment headers, so their licensing is declared here (REUSE
-# spec, https://reuse.software). *.ts / *.js files carry SPDX headers in-file.
+# server.json schema, which keeps its upstream MIT license. Files that cannot
+# carry a comment header (JSON, lockfiles) or where one would be unwelcome
+# noise (LICENSE, NOTICE, and the top-level docs meant to be read as prose)
+# are declared here instead (REUSE spec, https://reuse.software). Everything
+# else — *.ts / *.js / *.yml / the pre-commit hook — carries an SPDX header
+# in-file.
 
 [[annotations]]
 path = [
@@ -18,6 +21,15 @@ path = [
   "CONTRIBUTING.md",
   "ROADMAP.md",
   ".github/CODEOWNERS",
+  "CHANGELOG.md",
+  "README.md",
+  "NOTICE",
+  "LICENSE",
+  "REUSE.toml",
+  "bun.lock",
+  "bindings/typescript/bun.lock",
+  "biome.json",
+  "vendor/README.md",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "© 2026 ribosome-schema contributors"
