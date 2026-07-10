@@ -6,7 +6,7 @@
 // exactly once per file (as each schema's own `schemaVersion` const) and
 // consistent everywhere else it's implied — the $id path segment, the
 // directory the file physically lives in, and the generated TS export. This
-// runs on every `npm test` (not just a scheduled job) so a version-consistency
+// runs on every `bun run test` (not just a scheduled job) so a version-consistency
 // break fails CI on the PR that introduced it, not later.
 
 const { test } = require("node:test");
@@ -63,6 +63,6 @@ test("generated SCHEMA_VERSION export matches the schema's own const", () => {
   assert.equal(
     SCHEMA_VERSION,
     manifest.properties.schemaVersion.const,
-    "generated types.ts SCHEMA_VERSION is stale — run `npm run spec:types` and rebuild",
+    "generated types.ts SCHEMA_VERSION is stale — run `bun run spec:types` and rebuild",
   );
 });

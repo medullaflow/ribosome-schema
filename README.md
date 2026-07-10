@@ -129,6 +129,10 @@ upstream). Per-file detail is machine-readable via [REUSE](https://reuse.softwar
 **You may implement this standard in any product, open or closed, without
 obligation.**
 
+## Security
+
+See [SECURITY.md](SECURITY.md) for how to report a vulnerability privately.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) — what goes where (schema vs. binding),

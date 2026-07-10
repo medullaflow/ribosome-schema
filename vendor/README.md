@@ -32,17 +32,17 @@ of truth.
 
 ## Drift detection (automated)
 
-`npm run vendor:check` (CI: [`vendor-drift.yml`](../.github/workflows/vendor-drift.yml),
+`bun run vendor:check` (CI: [`vendor-drift.yml`](../.github/workflows/vendor-drift.yml),
 weekly) verifies the vendored file **and** the upstream URL still hash to the
 pin. It never edits anything; on mismatch it fails and opens a tracking issue.
 
 ## Updating (deliberate, via PR)
 
 ```bash
-npm run vendor:update <YYYY-MM-DD>   # downloads, vendors, updates the pin, regenerates types
+bun run vendor:update <YYYY-MM-DD>   # downloads, vendors, updates the pin, regenerates types
 ```
 
 Then, in the same PR: update the table above, add/adjust conformance fixtures
-for any new fields, ensure `npm test` passes, bump this package's version, and
+for any new fields, ensure `bun run test` passes, bump this package's version, and
 add a `CHANGELOG.md` entry. Never auto-merge — a schema change can change the
 meaning of the standard.

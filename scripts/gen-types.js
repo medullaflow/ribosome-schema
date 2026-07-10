@@ -6,7 +6,7 @@
 // TypeScript types — AND the SCHEMA_VERSION constant — are derived artifacts.
 // Run after editing any *.schema.json:
 //
-//   npm run spec:types
+//   bun run spec:types
 //
 // We generate types for OUR schemas (manifest, lockfile) only. The manifest
 // $refs the external MCP server.json schema — we do NOT inline/generate that

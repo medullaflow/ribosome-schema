@@ -21,7 +21,7 @@ export const MCP_SERVER_SCHEMA_ID =
 
 /**
  * SHA-256 of the vendored server.json schema file. This is the machine-checkable
- * provenance: `npm run vendor:check` verifies the local vendored file and the
+ * provenance: `bun run vendor:check` verifies the local vendored file and the
  * upstream URL both still hash to this. Updating the pin is a deliberate change
  * (see scripts/vendor-update.js and vendor/README.md).
  */

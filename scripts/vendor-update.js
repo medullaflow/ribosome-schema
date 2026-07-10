@@ -45,7 +45,7 @@ const outFile = join(root, "vendor", `server.schema.${date}.json`);
     rmSync(join(root, "vendor", `server.schema.${oldVersion}.json`), { force: true });
   }
 
-  execFileSync("node", [join(__dirname, "gen-types.js")], { stdio: "inherit" });
+  execFileSync("bun", [join(__dirname, "gen-types.js")], { stdio: "inherit" });
 
   console.log(
     `\n✓ vendored server.json ${date} (sha256 ${sha256.slice(0, 12)}…), pin + types updated.`,
@@ -53,7 +53,7 @@ const outFile = join(root, "vendor", `server.schema.${date}.json`);
   console.log("\nNow, by hand, in this PR:");
   console.log("  1. Update the table in vendor/README.md (version + SHA-256).");
   console.log("  2. Add/adjust conformance fixtures for any new/changed fields.");
-  console.log("  3. `npm test` must pass.");
+  console.log("  3. `bun run test` must pass.");
   console.log("  4. Bump this package's version and add a CHANGELOG entry.");
 })().catch((err) => {
   console.error(err.message);

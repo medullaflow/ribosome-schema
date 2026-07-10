@@ -39,4 +39,5 @@ package is built from `schema/v1/` and `bindings/typescript/src/` in that repo.
 ## License
 
 Apache-2.0. You may implement the ribosome standard in any product, open or
-closed, without obligation. See [LICENSE](LICENSE).
+closed, without obligation. See
+[LICENSE](https://github.com/medullaflow/ribosome-schema/blob/main/LICENSE).

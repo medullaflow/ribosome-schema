@@ -9,7 +9,7 @@
 //
 // This suite runs them against the TypeScript binding, as a concrete proof the
 // corpus and the schema agree. Runs against the built output (dist/), so
-// `npm test` builds first.
+// `bun run test` builds first.
 
 const { test } = require("node:test");
 const assert = require("node:assert/strict");

@@ -3,7 +3,7 @@
 
 // Copies build-time artifacts derived from repo-root sources of truth into
 // bindings/typescript/, so the published npm package is self-contained. Runs
-// automatically after `npm run build` (postbuild). Nothing this script writes
+// automatically after `bun run build` (postbuild). Nothing this script writes
 // is git-tracked (see .gitignore) — it is always regenerated from the one
 // real source, never hand-duplicated.
 //

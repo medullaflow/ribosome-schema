@@ -18,6 +18,22 @@ follow a specific, deliberate process.
   `bindings/typescript/src/`. Do not hand-edit generated files (`types.ts`).
 - **Documentation, tooling** → as appropriate; keep `bun run test` green.
 
+## Linting, formatting, and license compliance
+
+Running `bun install` once after cloning configures git to use the versioned
+hook in `.githooks/` (via `core.hooksPath` — no husky, no extra dependency).
+From then on, `git commit` blocks on a [Biome](https://biomejs.dev) lint/format
+violation in staged files. Useful commands:
+
+    bun run lint       # check the whole tree
+    bun run lint:fix   # fix what Biome can fix automatically
+    bun run format     # formatter only
+
+Per-file license/copyright metadata (SPDX headers in `.ts`/`.js`, `REUSE.toml`
+annotations for files that can't carry one) is checked by `reuse lint` in CI
+only, not the pre-commit hook — it needs a Python toolchain this repo's own
+tooling otherwise doesn't use, so CI is the authoritative gate for it.
+
 ## License
 
 Contributions are licensed under **Apache-2.0** (the vendored MCP schema keeps
