@@ -11,8 +11,8 @@ This repository holds the ribosome STANDARD ONLY (JSON Schemas + conformance
 corpus + a thin TypeScript binding) — deliberately Apache-2.0, so it can be
 implemented freely, in any language or product, open or closed. The reference
 resolver/orchestrator implementation lives in a separate repository
-(github.com/medullaflow/ribosome) and is AGPL-3.0-or-later; that license does
-not apply here and creates no obligation on implementers of this standard.
+(github.com/medullaflow/ribosome) and is MPL-2.0; that license does not
+apply here and creates no obligation on implementers of this standard.
 
 ================================================================================
                     THIRD-PARTY COMPONENTS
