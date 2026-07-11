@@ -2,6 +2,19 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [Unreleased]
+
+### Added
+- **[`SPEC.md`](SPEC.md)** — the normative companion to the schema files,
+  closing #10 and #11. Pins down: (1) a decision table for what counts as a
+  breaking vs. non-breaking schema change; (2) `permissions`'s semantics —
+  opaque scope strings this repo defines the shape and contract for, not a
+  vocabulary; (3) `extends`'s semantics — importing `.mcp.json`-shaped
+  external config as `ProcessServer` entries, path resolution rules, and a
+  full local-over-imported, later-over-earlier conflict-resolution order.
+  This clears this repo's own alpha bar (both criteria now met) — status
+  bumped from pre-alpha to alpha.
+
 ## [0.1.11] - 2026-07-11
 
 ### Changed
