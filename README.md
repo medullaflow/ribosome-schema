@@ -119,6 +119,29 @@ tested; the schema is **hosted live** at its canonical `$id`
 (`schema.ribosome.medullaflow.org`) and published to npm as
 `@medullaflow/ribosome-schema`. What's next is in [ROADMAP.md](ROADMAP.md).
 
+### What "alpha" means
+
+Much closer here than in the sibling [ribosome](https://github.com/medullaflow/ribosome)
+repo, which is still pre-CLI/pre-publish — this package is already published,
+hosted, and tested, with a real consumer (`ribosome` itself depends on it).
+Not gated on `extends`-field semantics, SchemaStore submission, conformance-
+corpus restructuring, or sibling language bindings — those are real but are
+post-alpha expansion, not a minimum bar. Pre-alpha becomes alpha here when:
+
+1. **`SPEC.md` exists**, pinning down versioning/compatibility rules and the
+   semantics of `permissions`/`extends` — alpha implies the interface won't
+   change wildly without warning, which needs to be written down, not just
+   true in practice.
+2. **The [Guardrails & Governance](https://github.com/medullaflow/ribosome-schema/milestones)
+   milestone's open items are resolved or explicitly accepted as
+   deliberately deferred** (both currently open issues there are the latter:
+   gated on a trigger — new dependency, dependency-tree growth — that
+   hasn't happened yet, not unstarted work).
+
+Not a fixed issue checklist (that drifts the moment an issue's scope
+changes) — check the milestones above for what's currently done against
+this bar.
+
 ## Licensing
 
 **Apache-2.0** — see [LICENSE](LICENSE) and [NOTICE](NOTICE) for what that
