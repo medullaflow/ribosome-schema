@@ -19,6 +19,9 @@
       }
     }
   },
+  "pool": {
+    "dir": ".ribosome/pool"
+  },
   "mcpServers": {
     "fs": {
       "source": "registry",

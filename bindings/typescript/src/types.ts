@@ -88,6 +88,15 @@ export interface RibosomeManifest {
     [k: string]: McpServer;
   };
   /**
+   * Governs where this project's runtime pool is materialized. Optional -- omitted means the environment provider's own default (typically a shared store reused across projects, maximizing install reuse). Setting a directory trades that reuse for isolation (e.g. hermetic CI, per-package pools in a monorepo); each provider interprets this if it has a relocatable store, and may ignore it otherwise.
+   */
+  pool?: {
+    /**
+     * Directory the runtime pool is materialized into, resolved relative to this manifest's own directory unless absolute. Provider-interpreted -- e.g. the mise-backed provider maps this to MISE_DATA_DIR.
+     */
+    dir?: string;
+  };
+  /**
    * RESERVED (v1): paths to external MCP config files (.mcp.json, .vscode/mcp.json, ...) to import. The import parser lands in a later minor version; declaring this field now keeps that capability additive and non-breaking.
    */
   extends?: string[];
