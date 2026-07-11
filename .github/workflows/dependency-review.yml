@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: © 2026 ribosome-schema contributors
+
+name: Dependency Review
+
+# Runs only on pull_request: it diffs the dependency manifest(s) against the
+# PR's base, so a new/updated dependency is scanned and its advisory status
+# surfaced as a check on that exact PR -- not a periodic background scan.
+# Free for public repos (medullaflow/ribosome-schema is public) via GitHub's
+# own Dependency Graph + Advisory Database; no external account or secret
+# needed. Mirrors ribosome's own dependency-review.yml (D32). Covers both of
+# this repo's independent package.json/bun.lock pairs (root + bindings/
+# typescript) in one pass -- the action scans whatever manifests changed in
+# the diff, no per-directory configuration needed.
+on:
+  pull_request:
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/dependency-review-action@v5
