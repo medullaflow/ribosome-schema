@@ -2,6 +2,20 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.11] - 2026-07-11
+
+### Changed
+- `typescript` (a devDependency of `bindings/typescript`, build-time only --
+  `tsc` compiles `dist/`, nothing from it ships in the published package)
+  bumped to `^7.0.2`, the native/Go compiler. Clean bump: this repo's own
+  tooling (`scripts/gen-types.js`) generates types via `json-schema-to-
+  typescript`, never TypeScript's own programmatic Compiler API, so it's
+  unaffected by that API's removal in 7.0 (which did require a bridge
+  package, `@typescript/typescript6`, in the sibling `ribosome` repo's own
+  `scripts/architecture-rules.js` -- see that repo's `docs/ARCHITECTURE.md`
+  D34). No schema/behavior change; `bun run build`/`test`/`lint` all pass
+  unmodified.
+
 ## [0.1.10] - 2026-07-11
 
 ### Fixed
