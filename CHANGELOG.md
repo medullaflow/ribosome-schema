@@ -2,6 +2,18 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.10] - 2026-07-11
+
+### Fixed
+- `pool.dir`'s own description incorrectly said it resolves relative to "this
+  manifest's own directory" -- corrected to the project root (the resolver's
+  `cwd`), which is what the sibling `ribosome` repo's `Materializer` actually
+  anchors it to (it only ever sees the already-parsed manifest value plus
+  `cwd`, never the manifest file's own path). These coincide whenever the
+  manifest lives at the project root, the overwhelmingly common case; they
+  can differ if a caller resolves a manifest from a non-default path. Doc-only
+  correction, no schema/behavior change.
+
 ## [0.1.9] - 2026-07-11
 
 ### Added
