@@ -2,6 +2,20 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/)
 
+## [0.1.9] - 2026-07-11
+
+### Added
+- `RibosomeManifest` gains an optional `pool` field (`{ dir }`): the directory
+  a project's runtime pool is materialized into, resolved relative to the
+  manifest's own directory unless absolute. Provider-interpreted -- the
+  sibling `ribosome` repo's mise-backed provider maps this to `MISE_DATA_DIR`;
+  a provider with no relocatable store may ignore it. Omitted (the default)
+  means the provider's own default, typically a store shared across projects
+  that maximizes install reuse -- setting `dir` trades that reuse for
+  isolation (hermetic CI, per-package pools in a monorepo), so it's meant as
+  an escape hatch, not a default-reach-for knob. Purely additive: existing
+  manifests with no `pool` field are unaffected.
+
 ## [0.1.8] - 2026-07-10
 
 ### Added
