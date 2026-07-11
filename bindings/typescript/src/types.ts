@@ -92,7 +92,7 @@ export interface RibosomeManifest {
    */
   pool?: {
     /**
-     * Directory the runtime pool is materialized into, resolved relative to this manifest's own directory unless absolute. Provider-interpreted -- e.g. the mise-backed provider maps this to MISE_DATA_DIR.
+     * Directory the runtime pool is materialized into, resolved relative to the project root (the resolver's cwd) unless absolute. Provider-interpreted -- e.g. the mise-backed provider maps this to MISE_DATA_DIR.
      */
     dir?: string;
   };
