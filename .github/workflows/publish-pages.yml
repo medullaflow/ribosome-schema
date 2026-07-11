@@ -44,7 +44,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       # Stage only *.schema.json (+ CNAME, required for the custom domain) into
       # a clean directory, so the published artifact can never pick up a stray
       # non-schema file added to schema/ later (e.g. a README) — deliberately
