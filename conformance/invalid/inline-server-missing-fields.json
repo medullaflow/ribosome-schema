@@ -1,11 +1,16 @@
 {
-  "schemaVersion": "1",
-  "mcpServers": {
-    "custom": {
-      "source": "inline",
-      "server": {
-        "name": "com.example/broken"
+  "description": "an inline server's `server` object is a full MCP server.json descriptor -- omitting its required fields (description, version) violates that vendored schema",
+  "input": {
+    "schemaVersion": "1",
+    "mcpServers": {
+      "custom": {
+        "source": "inline",
+        "server": {
+          "name": "com.example/broken"
+        }
       }
     }
-  }
+  },
+  "valid": false,
+  "expectedErrorPointer": "/mcpServers/custom/server"
 }

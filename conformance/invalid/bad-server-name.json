@@ -1,9 +1,14 @@
 {
-  "schemaVersion": "1",
-  "mcpServers": {
-    "fs": {
-      "source": "registry",
-      "name": "no-namespace-here"
+  "description": "a registry-sourced server's `name` must be namespace/name (the MCP server.json convention) -- a bare name with no '/' violates the pattern",
+  "input": {
+    "schemaVersion": "1",
+    "mcpServers": {
+      "fs": {
+        "source": "registry",
+        "name": "no-namespace-here"
+      }
     }
-  }
+  },
+  "valid": false,
+  "expectedErrorPointer": "/mcpServers/fs/name"
 }

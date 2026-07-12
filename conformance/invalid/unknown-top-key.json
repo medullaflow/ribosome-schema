@@ -1,4 +1,9 @@
 {
-  "schemaVersion": "1",
-  "runtymes": { "node": "24" }
+  "description": "the manifest's top level rejects unknown properties -- a typo like 'runtymes' (instead of 'runtimes') is caught, not silently ignored",
+  "input": {
+    "schemaVersion": "1",
+    "runtymes": { "node": "24" }
+  },
+  "valid": false,
+  "expectedErrorPointer": "/"
 }

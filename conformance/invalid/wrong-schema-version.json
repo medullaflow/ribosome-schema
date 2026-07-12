@@ -1,3 +1,8 @@
 {
-  "schemaVersion": "2"
+  "description": "`schemaVersion` is a const -- any value other than this schema family's own version is rejected",
+  "input": {
+    "schemaVersion": "2"
+  },
+  "valid": false,
+  "expectedErrorPointer": "/schemaVersion"
 }
