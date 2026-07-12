@@ -4,6 +4,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/)
 
 ## [Unreleased]
 
+## [0.1.12] - 2026-07-12
+
 ### Added
 - **[`SPEC.md`](SPEC.md)** — the normative companion to the schema files,
   closing #10 and #11. Pins down: (1) a decision table for what counts as a
