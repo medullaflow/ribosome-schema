@@ -8,7 +8,7 @@ a TypeScript binding.
 [![npm](https://img.shields.io/npm/v/@medullaflow/ribosome-schema)](https://www.npmjs.com/package/@medullaflow/ribosome-schema)
 [![schema: live](https://img.shields.io/badge/schema-live-brightgreen)](https://schema.ribosome.medullaflow.org/v1/manifest.schema.json)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](#status)
+[![Status: alpha](https://img.shields.io/badge/status-alpha-yellow.svg)](#status)
 
 This repo holds **the standard, and only the standard** — no resolver, no
 runtime, no orchestration logic. Resolvers/tools consume it as a dependency
@@ -114,10 +114,32 @@ support npm's OIDC trusted publishing.
 
 ## Status
 
-Pre-alpha. The schemas, conformance corpus, and TypeScript binding are real and
+Alpha. The schemas, conformance corpus, and TypeScript binding are real and
 tested; the schema is **hosted live** at its canonical `$id`
 (`schema.ribosome.medullaflow.org`) and published to npm as
-`@medullaflow/ribosome-schema`. What's next is in [ROADMAP.md](ROADMAP.md).
+`@medullaflow/ribosome-schema`; [`SPEC.md`](SPEC.md) now pins down the
+interface's compatibility rules and the semantics this schema deliberately
+leaves opaque. What's next is in [ROADMAP.md](ROADMAP.md).
+
+### What "alpha" meant
+
+This package cleared its own alpha bar — kept here as a record of what that
+bar was, not a live checklist:
+
+1. ✅ **[`SPEC.md`](SPEC.md) exists**, pinning down versioning/compatibility
+   rules and the semantics of `permissions`/`extends` — alpha implies the
+   interface won't change wildly without warning, which needs to be written
+   down, not just true in practice.
+2. ✅ **The [Guardrails & Governance](https://github.com/medullaflow/ribosome-schema/milestones)
+   milestone's open items are resolved or explicitly accepted as
+   deliberately deferred** (both currently open issues there are the latter:
+   gated on a trigger — new dependency, dependency-tree growth — that
+   hasn't happened yet, not unstarted work).
+
+Not gated on SchemaStore submission, conformance-corpus restructuring, or
+sibling language bindings — those are real, tracked in
+[ROADMAP.md](ROADMAP.md), and are beta/stable-track expansion, not an alpha
+requirement.
 
 ### What "alpha" means
 

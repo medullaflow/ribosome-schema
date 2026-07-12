@@ -20,6 +20,7 @@ path = [
   "AUTHORS",
   "CONTRIBUTING.md",
   "ROADMAP.md",
+  "SPEC.md",
   ".github/CODEOWNERS",
   "CHANGELOG.md",
   "README.md",
