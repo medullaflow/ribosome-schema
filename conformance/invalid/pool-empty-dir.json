@@ -1,6 +1,11 @@
 {
-  "schemaVersion": "1",
-  "pool": {
-    "dir": ""
-  }
+  "description": "`pool.dir`, when present, must be a non-empty string",
+  "input": {
+    "schemaVersion": "1",
+    "pool": {
+      "dir": ""
+    }
+  },
+  "valid": false,
+  "expectedErrorPointer": "/pool/dir"
 }

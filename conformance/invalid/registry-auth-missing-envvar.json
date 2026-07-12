@@ -1,12 +1,17 @@
 {
-  "schemaVersion": "1",
-  "registries": {
-    "default": "private",
-    "sources": {
-      "private": {
-        "url": "https://mcp.example.internal",
-        "auth": [{ "header": "Authorization" }]
+  "description": "each `auth` header entry must declare the `envVar` its credential is read from at resolve time -- a header with no envVar is rejected, never a literal credential either",
+  "input": {
+    "schemaVersion": "1",
+    "registries": {
+      "default": "private",
+      "sources": {
+        "private": {
+          "url": "https://mcp.example.internal",
+          "auth": [{ "header": "Authorization" }]
+        }
       }
     }
-  }
+  },
+  "valid": false,
+  "expectedErrorPointer": "/registries/sources/private/auth/0"
 }

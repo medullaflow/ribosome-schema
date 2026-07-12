@@ -4,6 +4,20 @@ Format: [Keep a Changelog](https://keepachangelog.com/)
 
 ## [Unreleased]
 
+### Changed
+- **Conformance corpus restructured, closing #13 and #14** — every fixture
+  under `conformance/valid|invalid/` is now `{ description, input, valid,
+  expectedErrorPointer? }` instead of a bare manifest. `invalid/` fixtures
+  name the specific JSON-Schema-error pointer they expect
+  (`expectedErrorPointer`), not just "validation should fail" — a schema (or
+  an independent implementation) rejecting a fixture for the *wrong* reason
+  now fails the fixture, instead of silently passing on a boolean check
+  alone. `test/conformance.test.js` asserts both the declared `valid` flag
+  and, for invalid fixtures, that at least one reported error matches the
+  expected pointer. The corpus stays data, not TypeScript — any
+  other-language implementation can load the same JSON files against its own
+  validator.
+
 ## [0.1.12] - 2026-07-12
 
 ### Added

@@ -1,10 +1,15 @@
 {
-  "schemaVersion": "1",
-  "mcpServers": {
-    "remote": {
-      "source": "process",
-      "command": "some-proxy",
-      "transport": "http"
+  "description": "a process-sourced server with transport 'http' must declare a `url` -- conditionally required by the schema's if/then, not by `required` directly",
+  "input": {
+    "schemaVersion": "1",
+    "mcpServers": {
+      "remote": {
+        "source": "process",
+        "command": "some-proxy",
+        "transport": "http"
+      }
     }
-  }
+  },
+  "valid": false,
+  "expectedErrorPointer": "/mcpServers/remote"
 }
