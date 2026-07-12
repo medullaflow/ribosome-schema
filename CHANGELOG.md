@@ -14,6 +14,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/)
   full local-over-imported, later-over-earlier conflict-resolution order.
   This clears this repo's own alpha bar (both criteria now met) — status
   bumped from pre-alpha to alpha.
+- **READMEs restructured for adoption** — the repo README is reframed as
+  "the manifest & lockfile standard for the MCP package manager" (the
+  package.json-format-vs-npm-the-tool analogy), with a problem→solution→use
+  flow and the dense versioning/bump reference moved into `<details>`
+  blocks. The published package README (`bindings/typescript`) tagline is
+  aligned to the same positioning. Removed a stale duplicate alpha section
+  ("What alpha means" forward-looking text that contradicted the
+  already-reached alpha status).
 
 ## [0.1.11] - 2026-07-11
 

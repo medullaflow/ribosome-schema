@@ -1,7 +1,9 @@
 # @medullaflow/ribosome-schema
 
 TypeScript types, validation, and version pins for the **ribosome** standard —
-the `ribosome.json` project manifest and `ribosome.lock.json` output.
+the manifest & lockfile format for [ribosome](https://github.com/medullaflow/ribosome),
+the MCP package manager. Covers the `ribosome.json` project manifest and the
+`ribosome.lock.json` output.
 
 The normative artifact is the JSON Schema itself, hosted at:
 
