@@ -19,6 +19,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.3",
-    "json-schema-to-typescript": "^15.0.0"
+    "json-schema-to-typescript": "^16.0.0"
   }
 }
